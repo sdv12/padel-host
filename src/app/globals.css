@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+@theme {
+  /* superficies y texto: paper cálido en vez del "ink" oscuro de la primera versión */
+  --color-canvas: #fff6e9;
+  --color-surface: #ffffff;
+  --color-surface-alt: #ffefd9;
+  --color-border: rgba(36, 21, 52, 0.13);
+  --color-ink: #241534;
+  --color-muted: #746c86;
+
+  /* acentos de marca: coral como color de acción, azul como secundario, ámbar como aviso */
+  --color-primary: #ff4b57;
+  --color-primary-dim: #e23947;
+  --color-secondary: #2f6fed;
+  --color-warn: #e8791a;
+
+  /* texto sobre rellenos de acento: siempre blanco, los tres acentos son suficientemente oscuros */
+  --color-on-primary: #fffaf3;
+
+  --font-display: var(--font-display-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-body-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* colores del escalafón de categorías (8va a Profesional): se consumen vía var() inline */
+:root {
+  --cat-8va: #0e9488;
+  --cat-7ma: #0e7fb0;
+  --cat-6ta: #2563d8;
+  --cat-5ta: #5b4fe0;
+  --cat-4ta: #8b3fdb;
+  --cat-3ra: #b33fc0;
+  --cat-2da: #d6368a;
+  --cat-1ra: #e0522a;
+  --cat-pro: #c98a00;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+}
+
+::selection {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-secondary);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* puntitos de cancha como motivo decorativo, en vez de la grilla de líneas anterior */
+.court-lines {
+  background-image: radial-gradient(var(--color-border) 1.5px, transparent 1.5px);
+  background-size: 22px 22px;
+}
+
+/* botones en pastilla con sombra dura desplazada: el gesto "sticker" que reemplaza el corte
+   de esquina de la primera versión. El mismo nombre de clase evita tocar cada componente. */
+.btn-cut,
+.btn-cut-sm {
+  border-radius: 999px;
+  box-shadow: 3px 3px 0 var(--color-ink);
+  border: 2px solid var(--color-ink);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn-cut:hover,
+.btn-cut-sm:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--color-ink);
+}
+.btn-cut:active,
+.btn-cut-sm:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--color-ink);
+}
+
+/* borde tipo entrada/ticket: dos muescas semicirculares a los lados de una línea punteada.
+   El color de las muescas ahora es la superficie blanca de la tarjeta (antes era el fondo). */
+.ticket-tear {
+  position: relative;
+  border-top: 1.5px dashed var(--color-border);
+}
+.ticket-tear::before,
+.ticket-tear::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-surface);
+}
+.ticket-tear::before { left: -7px; }
+.ticket-tear::after { right: -7px; }
